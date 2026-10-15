@@ -1,13 +1,68 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SEQUOIA – Plan interactif</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 15px;
+      font-family: Arial, sans-serif;
+      background: #f2f5f8;
+    }
+    h2 { color: #173b60; }
+    .plan {
+      position: relative;
+      width: 100%;
+      max-width: 1500px;
+      margin: auto;
+    }
+    .plan img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .repere {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      background: #0866cc;
+      color: white;
+      border: 2px solid white;
+      border-radius: 20px;
+      padding: 6px 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <h1>SEQUOIA – Suivi Pose</h1>
-  <p>Plan interactif du chantier PALAIS</p>
-  <p>Sélection du niveau et du mobilier à venir.</p>
+
+<h2>PALAIS – Niveau 1</h2>
+<p>Cliquez sur un mobilier pour consulter sa fiche.</p>
+
+<div class="plan">
+  <img src="Niveau%201.png" alt="Plan d'implantation niveau 1">
+
+  <button class="repere" style="left:15%;top:29%"
+    onclick="ouvrirMobilier('DM4')">DM4</button>
+
+  <button class="repere" style="left:20%;top:29%"
+    onclick="ouvrirMobilier('DB3')">DB3</button>
+
+  <button class="repere" style="left:20%;top:60%"
+    onclick="ouvrirMobilier('RC12')">RC12</button>
+
+  <button class="repere" style="left:78%;top:50%"
+    onclick="ouvrirMobilier('CA0')">CA0</button>
+</div>
+
+<script>
+  function ouvrirMobilier(repere) {
+    alert("Mobilier sélectionné : " + repere);
+  }
+</script>
+
 </body>
 </html>
