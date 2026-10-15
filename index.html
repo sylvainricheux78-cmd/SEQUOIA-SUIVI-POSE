@@ -72,6 +72,12 @@
 
 </div>
 
+  <div id="niveau2" style="display:none;">
+  <div class="plan">
+    <img src="Niveau%202.png" alt="Palais - Niveau 2">
+  </div>
+</div>
+  
 
 <script>
   const mobiliers = {
@@ -224,11 +230,14 @@
 
   <script>
 function afficherNiveau(niveau) {
-  if (niveau === 2) {
-    alert("Le niveau 2 sera activé à la prochaine étape.");
-  } else {
-    window.location.reload();
-  }
+  document.getElementById("niveau2").style.display =
+    niveau === 2 ? "block" : "none";
+
+  document.querySelector("body > .plan").style.display =
+    niveau === 1 ? "block" : "none";
+
+  document.querySelector("h2").textContent =
+    "PALAIS – Niveau " + niveau;
 }
 </script>
   
