@@ -39,6 +39,11 @@
 </head>
 <body>
 
+  <div style="margin-bottom:15px;">
+  <button onclick="afficherNiveau(1)">Niveau 1</button>
+  <button onclick="afficherNiveau(2)">Niveau 2</button>
+</div>
+  
 <h2>PALAIS – Niveau 1</h2>
 <p>Cliquez sur un mobilier pour consulter sa fiche.</p>
 
@@ -217,5 +222,15 @@
   }
 </script>
 
+  <script>
+function afficherNiveau(niveau) {
+  if (niveau === 2) {
+    alert("Le niveau 2 sera activé à la prochaine étape.");
+  } else {
+    window.location.reload();
+  }
+}
+</script>
+  
   </body>
 </html>
