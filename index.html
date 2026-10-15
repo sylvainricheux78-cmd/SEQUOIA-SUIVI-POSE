@@ -324,6 +324,58 @@ function afficherNiveau(niveau) {
     "PALAIS – Niveau " + niveau;
 }
 </script>
+
   
+<script>
+const urlCouleurs =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSlb7ZpVa8CqFZ-iCBf7mrs80cBfVdKUr_BLsrF_sQnmiRJK4rA9zsZH2MFgVIuU1ghnYUGuEPovOuJ/pub?gid=1044343382&single=true&output=csv";
+
+async function actualiserCouleurs() {
+  try {
+    const reponse = await fetch(
+      urlCouleurs + "&t=" + Date.now(),
+      { cache: "no-store" }
+    );
+
+    if (!reponse.ok) throw new Error("CSV inaccessible");
+
+    const csv = await reponse.text();
+    const lignes = csv.trim().split(/\r?\n/);
+    const couleurs = {};
+
+    lignes.slice(1).forEach(ligne => {
+      const cellules = ligne.split(",");
+      const id = cellules[0]?.replace(/"/g, "").trim();
+      const couleur = cellules[1]?.replace(/"/g, "").trim();
+
+      if (id && /^#[0-9a-fA-F]{6}$/.test(couleur)) {
+        couleurs[id] = couleur;
+      }
+    });
+
+    document.querySelectorAll(".repere").forEach(bouton => {
+      const repere = bouton.textContent.trim();
+      const id = mobiliers[repere];
+      const couleur = couleurs[id];
+
+      if (!couleur) return;
+
+      bouton.style.backgroundColor = couleur;
+      bouton.style.color =
+        ["#FFFFFF", "#FFE45C"].includes(couleur.toUpperCase())
+          ? "#000000"
+          : "#FFFFFF";
+    });
+
+    console.log("Couleurs SEQUOIA actualisées");
+  } catch (erreur) {
+    console.error("Erreur de chargement des couleurs :", erreur);
+  }
+}
+
+actualiserCouleurs();
+setInterval(actualiserCouleurs, 60000);
+</script>
+
   </body>
 </html>
