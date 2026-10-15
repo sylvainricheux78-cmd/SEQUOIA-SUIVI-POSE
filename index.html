@@ -137,3 +137,119 @@
   }
 </script>
 
+
+  
+<style>
+  .mode-positionnement {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 1000;
+    padding: 12px;
+    background: #173b60;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  body.edition .repere {
+    cursor: grab;
+    touch-action: none;
+  }
+
+  #coordonnees {
+    position: fixed;
+    bottom: 12px;
+    left: 12px;
+    z-index: 1000;
+    background: white;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    max-height: 35vh;
+    overflow: auto;
+    font: 12px monospace;
+    white-space: pre-wrap;
+  }
+</style>
+
+<button class="mode-positionnement"
+        onclick="basculerEdition()">
+  Activer le positionnement
+</button>
+
+<pre id="coordonnees" hidden></pre>
+
+<script>
+  let modeEdition = false;
+  let deplacement = null;
+
+  function basculerEdition() {
+    modeEdition = !modeEdition;
+    document.body.classList.toggle("edition", modeEdition);
+
+    document.querySelector(".mode-positionnement").textContent =
+      modeEdition
+        ? "Terminer le positionnement"
+        : "Activer le positionnement";
+
+    document.getElementById("coordonnees").hidden = !modeEdition;
+
+    if (modeEdition) afficherCoordonnees();
+  }
+
+  const plan = document.querySelector(".plan");
+
+  document.querySelectorAll(".repere").forEach(bouton => {
+    bouton.addEventListener("pointerdown", e => {
+      if (!modeEdition) return;
+
+      e.preventDefault();
+      deplacement = bouton;
+      bouton.setPointerCapture(e.pointerId);
+    });
+
+    bouton.addEventListener("pointermove", e => {
+      if (!modeEdition || deplacement !== bouton) return;
+
+      const rect = plan.getBoundingClientRect();
+
+      const x = Math.max(0, Math.min(100,
+        (e.clientX - rect.left) / rect.width * 100));
+
+      const y = Math.max(0, Math.min(100,
+        (e.clientY - rect.top) / rect.height * 100));
+
+      bouton.style.left = x.toFixed(2) + "%";
+      bouton.style.top = y.toFixed(2) + "%";
+
+      afficherCoordonnees();
+    });
+
+    bouton.addEventListener("pointerup", () => {
+      deplacement = null;
+    });
+
+    bouton.addEventListener("click", e => {
+      if (modeEdition) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+      }
+    }, true);
+  });
+
+  function afficherCoordonnees() {
+    const lignes = [...document.querySelectorAll(".repere")]
+      .map(b => {
+        return b.textContent.trim() + " : " +
+          b.style.left + " / " + b.style.top;
+      });
+
+    document.getElementById("coordonnees").textContent =
+      lignes.join("\n");
+  }
+</script>
+
+  </body>
+</html>
