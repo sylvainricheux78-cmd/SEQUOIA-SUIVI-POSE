@@ -238,7 +238,7 @@
     if (modeEdition) afficherCoordonnees();
   }
 
-  const plan = document.querySelector(".plan");
+
 
   document.querySelectorAll(".repere").forEach(bouton => {
     bouton.addEventListener("pointerdown", e => {
@@ -252,7 +252,8 @@
     bouton.addEventListener("pointermove", e => {
       if (!modeEdition || deplacement !== bouton) return;
 
-      const rect = plan.getBoundingClientRect();
+    const plan = bouton.closest(".plan");
+    const rect = plan.getBoundingClientRect();
 
       const x = Math.max(0, Math.min(100,
         (e.clientX - rect.left) / rect.width * 100));
