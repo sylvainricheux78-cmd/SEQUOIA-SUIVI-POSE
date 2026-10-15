@@ -56,13 +56,44 @@
 
   <button class="repere" style="left:78%;top:50%"
     onclick="ouvrirMobilier('CA0')">CA0</button>
+
+<button class="repere" style="left:83%;top:75%"
+  onclick="ouvrirMobilier('DA1')">DA1</button>
 </div>
 
+
 <script>
+  const mobiliers = {
+    "DM4": "R001",
+    "DB3": "R002",
+    "DI4": "R003",
+    "RC12": "R004",
+    "TF": "R008",
+    "RC11": "R009",
+    "DC4": "R010",
+    "DM3": "R011",
+    "DM1": "R012",
+    "DI5": "R013",
+    "DG3": "R014",
+    "DB1": "R015",
+    "DI3": "R016",
+    "DP2": "R017",
+    "CA0": "R018",
+    "RC8": "R019",
+    "DP4": "R020",
+    "DA1": "R021"
+  };
+
   function ouvrirMobilier(repere) {
-window.location.href = "https://www.appsheet.com/start/d77fd0d8-c2a5-4bd0-b3f8-ba35e11a7a63#view=REFERENCEMENT_Detail&row=R018";
+    const id = mobiliers[repere];
+
+    if (!id) {
+      alert("Mobilier introuvable : " + repere);
+      return;
+    }
+
+    window.location.href =
+      "https://www.appsheet.com/start/d77fd0d8-c2a5-4bd0-b3f8-ba35e11a7a63#view=REFERENCEMENT_Detail&row=" + id;
   }
 </script>
 
-</body>
-</html>
